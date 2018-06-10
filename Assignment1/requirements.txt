@@ -1,0 +1,7 @@
+pandas_datareader==0.5.0
+numpy==1.13.1
+fix_yahoo_finance==0.0.19
+seaborn==0.8
+pandas==0.19.0
+matplotlib==2.0.2
+scipy==0.19.1
