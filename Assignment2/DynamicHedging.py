@@ -35,12 +35,13 @@ start = date1.replace(year=date1.year - 5)  # 5 years back
 # Function Definations
 # Get Future Prices
 def get_hist_futures(future_code, start_date, end_date):
-    DJIA_Futures = quandl.get(future_code,
-                              authtoken="M9yAZGcQVxrQKRr6WYjw",
-                              # authtoken="cvQViZ3mh8gkuANqgTc_",
-                              start_date=start_date,
-                              end_date=end_date)
-    return DJIA_Futures
+    return quandl.get(
+        future_code,
+        authtoken="M9yAZGcQVxrQKRr6WYjw",
+        # authtoken="cvQViZ3mh8gkuANqgTc_",
+        start_date=start_date,
+        end_date=end_date,
+    )
 
 
 # Get Option prices
@@ -228,14 +229,10 @@ if __name__ == "__main__":
     futures["Spot_Open"] = dow_jones_index.open[diff:]
     futures["Spot_Close"] = dow_jones_index.close[diff:]
 
-    num_fut_list = []
-    verdict = []
-    number_to_hedge = []
-    verdict.append('')
-    num_fut_list.append(no_of_fut)
+    verdict = ['']
+    num_fut_list = [no_of_fut]
     current_delta = 0
-    number_to_hedge.append(0)
-
+    number_to_hedge = [0]
     # Calculating delta of futures as movements in futures per day
     # w.r.t movement of underlying stock per day
     for i, row in enumerate(futures.values):

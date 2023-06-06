@@ -18,12 +18,13 @@ def yahoo_finance_bridge():
 
 
 def get_hist_futures(future_code, start_date, end_date):
-    DJIA_Futures = quandl.get(future_code,
-                              authtoken="M9yAZGcQVxrQKRr6WYjw",
-                              # authtoken="cvQViZ3mh8gkuANqgTc_",
-                              start_date=start_date,
-                              end_date=end_date)
-    return DJIA_Futures
+    return quandl.get(
+        future_code,
+        authtoken="M9yAZGcQVxrQKRr6WYjw",
+        # authtoken="cvQViZ3mh8gkuANqgTc_",
+        start_date=start_date,
+        end_date=end_date,
+    )
 
 
 def generate_portfolio():
@@ -35,8 +36,7 @@ def generate_portfolio():
                     'HD','AXP','GS','AAPL','XOM','CVX']
     close = pdr.get_data_yahoo(DJI_constituents, start='2013-09-01', end='2016-09-01', as_panel=False).fillna(0)
     position = pd.DataFrame(data=0,index=close.index,columns=close.columns)
-    portfolio = pd.Panel({'price':close,'pos':position})
-    return portfolio
+    return pd.Panel({'price':close,'pos':position})
 
 
 def equal_weighted_portfolio(portfolio):
@@ -117,7 +117,7 @@ def generate_stop_loss(portfolio):
         # so that we can keep adding these positions in current portfolio
         good_pos = [column for column in good_pos if column not in pos_list]
 
-        while len(pos_list) != 10 and len(good_pos) != 0 :
+        while len(pos_list) != 10 and good_pos:
             pos_list.append(good_pos.pop())
 
         # generate new positions
@@ -138,9 +138,6 @@ def generate_hedged_port(portfolio):
     dji_position = pd.DataFrame(data=0,index=dji_index.index,columns=dji_index.columns)
     price = portfolio['price']
     pos = portfolio['pos']
-    # Get DJI Data
-
-    pass
 
 
 def main():
